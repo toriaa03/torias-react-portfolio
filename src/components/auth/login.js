@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Axios from 'axios';
+import axios from 'axios';
 
 export default class Login extends Component {
   constructor(props) {
@@ -24,7 +24,7 @@ export default class Login extends Component {
   }
 
   handleSubmit(event) {
-      Axios.post("https://api.devcamp.space/sessions",
+      axios.post("https://api.devcamp.space/sessions",
       {
           client: {
               email: this.state.email,
@@ -34,17 +34,21 @@ export default class Login extends Component {
       { withCredentials: true }
       ).then(response => {
           if (response.data.status === 'created') {
-            console.log("You can come in...")
+            this.props.handleSuccessfulAuth();
           } else {
               this.setState({
                   errorText: "Wrong email or password"
               });
+              this.props.handleUnsuccessfulAuth();
+
           }
 
-      }).catch(error => {
+      })
+      .catch(error => {
           this.setState({
               errorText: "An error occurred"
-          })
+          });
+          this.props.handleUnsuccessfulAuth();
       });
       
 
