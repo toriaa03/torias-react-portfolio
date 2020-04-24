@@ -33,6 +33,7 @@ export default class PortfolioForm extends Component {
       this.handleLogoDrop = this.handleLogoDrop.bind(this);
       this.deleteImage = this.deleteImage.bind(this);
 
+      
       this.thumbRef = React.createRef();
       this.bannerRef = React.createRef();
       this.logoRef = React.createRef();
@@ -163,7 +164,6 @@ handleLogoDrop() {
         if (this.state.editMode) {
             this.props.handleEditSubmission();
         } else {
-          this.props.handleNewFormSubmission(response.data.portfolio_item)
         }
           this.setState({
             name: "",
@@ -179,9 +179,9 @@ handleLogoDrop() {
             apiAction: 'post'
           });
 
-          [this.thumbRef, this.bannerRef, this.logoRef].forEach(ref => {
-              ref.current.dropzone.removeAllFiles();
-          });
+        [this.thumbRef, this.bannerRef, this.logoRef].forEach(ref => {
+            ref.current.dropzone.removeAllFiles();
+        });
       }).catch(error => {
           console.log("portfolio handle submit error", error);
       })
